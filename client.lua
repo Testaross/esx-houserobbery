@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+ESX = exports["es_extended"]:getSharedObject()
 local House = 1
 
 local function DrawText3D(coords, text)
@@ -29,9 +29,9 @@ CreateThread(function()
                 Nearby = true
                 House = i
                 if Config.UseDrawText then
-                    if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.enter_house')) end
+                    -- if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.enter_house')) end
                 else
-                    DrawText3D(Config.Houses[i].coords, Lang:t('text.enter_house'))
+                    -- DrawText3D(Config.Houses[i].coords, Lang:t('text.enter_house'))
                 end
                 if IsControlJustReleased(0, 38) then
                     LoadAnimDict('anim@heists@keycard@')
@@ -43,13 +43,13 @@ CreateThread(function()
                 WaitTime = 0
                 Nearby = true
                 if Config.UseDrawText then
-                    if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.enter_requirements')) end
+                    -- if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.enter_requirements')) end
                 else
-                    DrawText3D(Config.Houses[i].coords, Lang:t('text.enter_requirements'))
+                    -- DrawText3D(Config.Houses[i].coords, Lang:t('text.enter_requirements'))
                 end
             end
         end
-        if not Nearby and HasShownText then HasShownText = false exports['qb-core']:HideText() end
+        -- if not Nearby and HasShownText then HasShownText = false exports['qb-core']:HideText() end
         Wait(WaitTime)
     end
 end)
@@ -66,9 +66,9 @@ CreateThread(function()
                 WaitTime = 0
                 Nearby = true
                 if Config.UseDrawText then
-                    if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.leave_house')) end
+                    -- if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.leave_house')) end
                 else
-                    DrawText3D(Exit, Lang:t('text.leave_house'))
+                    -- DrawText3D(Exit, Lang:t('text.leave_house'))
                 end
                 if IsControlJustReleased(0, 38) then
                     LoadAnimDict('anim@heists@keycard@')
@@ -78,7 +78,7 @@ CreateThread(function()
                 end
             end
         end
-        if not Nearby and HasShownText then HasShownText = false exports['qb-core']:HideText() end
+        -- if not Nearby and HasShownText then HasShownText = false exports['qb-core']:HideText() end
         Wait(WaitTime)
     end
 end)
@@ -95,14 +95,11 @@ CreateThread(function()
                     WaitTime = 0
                     Nearby = true
                     if Config.UseDrawText then
-                        if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.search')) end
+                        -- if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.search')) end
                     else
-                        DrawText3D(Config.Houses[House].loot[i].coords, Lang:t('text.search'))
+                        -- DrawText3D(Config.Houses[House].loot[i].coords, Lang:t('text.search'))
                     end
                     if IsControlJustReleased(0, 38) then
-                        if not QBCore.Functions.IsWearingGloves() then
-                            if Config.FingerDropChance > math.random(0, 100) then TriggerServerEvent('evidence:server:CreateFingerDrop', GetEntityCoords(cache.ped)) end
-                        end
                         lib.callback('qb-houserobbery:callback:checkLoot', false, function(CanStart)
                             if not CanStart then return end
                             if lib.progressCircle({
@@ -129,7 +126,7 @@ CreateThread(function()
                 end
             end
         end
-        if not Nearby and HasShownText then HasShownText = false exports['qb-core']:HideText() end
+        -- if not Nearby and HasShownText then HasShownText = false exports['qb-core']:HideText() end
         Wait(WaitTime)
     end
 end)
@@ -146,14 +143,14 @@ CreateThread(function()
                     WaitTime = 0
                     Nearby = true
                     if Config.UseDrawText then
-                        if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.pickup', { Item = QBCore.Shared.Items[Config.Houses[House].pickups[i].reward]['label'] })) end
-                    else
-                        DrawText3D(Config.Houses[House].pickups[i].coords, Lang:t('text.pickup', { Item = QBCore.Shared.Items[Config.Houses[House].pickups[i].reward]['label'] }))
+                    --     if not HasShownText then HasShownText = true exports['qb-core']:DrawText(Lang:t('text.pickup', { Item = QBCore.Shared.Items[Config.Houses[House].pickups[i].reward]['label'] })) end
+                    -- else
+                    --     DrawText3D(Config.Houses[House].pickups[i].coords, Lang:t('text.pickup', { Item = QBCore.Shared.Items[Config.Houses[House].pickups[i].reward]['label'] }))
                     end
                     if IsControlJustReleased(0, 38) then
-                        if not QBCore.Functions.IsWearingGloves() then
-                            if Config.FingerDropChance > math.random(0, 100) then TriggerServerEvent('evidence:server:CreateFingerDrop', GetEntityCoords(cache.ped)) end
-                        end
+                        -- if not QBCore.Functions.IsWearingGloves() then
+                        --     if Config.FingerDropChance > math.random(0, 100) then TriggerServerEvent('evidence:server:CreateFingerDrop', GetEntityCoords(cache.ped)) end
+                        -- end
                         lib.callback('qb-houserobbery:callback:checkPickup', false, function(CanStart)
                             if not CanStart then return end
                             if lib.progressCircle({
@@ -215,4 +212,9 @@ RegisterNetEvent('qb-houserobbery:client:syncconfig', function(Data, Index)
     else
         Config.Houses = Data
     end
+end)
+
+RegisterCommand('housetest', function()
+    print('here')
+    TriggerServerEvent('woofyboy')    
 end)
